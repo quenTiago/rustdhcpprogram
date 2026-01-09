@@ -1,0 +1,24 @@
+# --- Rust ---
+# Le dossier de compilation (TRÈS LOURD, ne jamais l'envoyer)
+/target/
+
+# Fichiers de backup (si tu utilises certains éditeurs)
+**/*.rs.bk
+
+# --- Windows ---
+# Fichiers systèmes inutiles
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Visual Studio Code ---
+# Paramètres locaux de ton éditeur (optionnel, mais conseillé si tu travailles seul)
+.vscode/
+*.code-workspace
+
+# --- macOS / Linux (au cas où tu changes de PC) ---
+.DS_Store
+.AppleDouble
+.LSOverride
+*~
