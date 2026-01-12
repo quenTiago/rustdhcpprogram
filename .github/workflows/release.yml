@@ -16,17 +16,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Configuration Linux
+          # --- CONFIGURATION LINUX ---
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            artifact_name: rustdhcpprogramlinux
-            asset_name: mon-projet-linux-amd64
+            artifact_name: rustdhcpprogram
+            asset_name: scanrustlinux-amd64
           
-          # Configuration Windows
+          # --- CONFIGURATION WINDOWS ---
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact_name: rustdhcpprogramwindows.exe 
-            asset_name: mon-projet-windows-amd64.exe
+            artifact_name: rustdhcpprogram.exe 
+            asset_name: scanrustwindows-amd64.exe
 
     steps:
       - name: Checkout code
@@ -39,6 +39,9 @@ jobs:
 
       - name: Build Project
         run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Show files (Debug)
+        run: ls -R target/
 
       - name: Rename binary (Linux/Mac)
         if: matrix.os != 'windows-latest'
