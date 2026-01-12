@@ -10,23 +10,34 @@ permissions:
 
 jobs:
   build-and-upload:
-    name: Build for ${{ matrix.os }}
+    name: Build for ${{ matrix.asset_name }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          # --- CONFIGURATION LINUX ---
+          # --- LINUX  ---
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            artifact_name: rustdhcpprogram
-            asset_name: scanrustlinux-amd64
-          
-          # --- CONFIGURATION WINDOWS ---
+            artifact_name: rustdhcpprogram       
+            asset_name: scanrustlinux-amd64      
+
+          # --- WINDOWS ---
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact_name: rustdhcpprogram.exe 
-            asset_name: scanrustwindows-amd64.exe
+            artifact_name: rustdhcpprogram.exe   
+            asset_name: scanrustwindows-amd64.exe 
+
+          # --- MACOS ---
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: rustdhcpprogram       
+            asset_name: scanrustmacos-intel      
+  
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: rustdhcpprogram       
+            asset_name: scanrustmacos-arm64      
 
     steps:
       - name: Checkout code
@@ -43,7 +54,8 @@ jobs:
       - name: Show files (Debug)
         run: ls -R target/
 
-      - name: Rename binary (Linux/Mac)
+
+      - name: Rename binary (Unix)
         if: matrix.os != 'windows-latest'
         run: cp target/${{ matrix.target }}/release/${{ matrix.artifact_name }} ${{ matrix.asset_name }}
 
